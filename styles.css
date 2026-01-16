@@ -5,10 +5,9 @@
 }
 
 .board {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(3, 100px);
   gap: 5px;
- 
   justify-content: center;
   margin-top: 20px;
 }
@@ -19,14 +18,13 @@
   border: 2px solid black;
   font-size: 48px;
   display: flex;
-  color: pink;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
 
 .message {
-  margin-top: 10px;
-  font-size: 18px;
+  margin-top: 20px;
+  font-size: 22px;
   font-weight: bold;
 }

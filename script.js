@@ -1,19 +1,18 @@
-//your JS code here. If required.
 let player1 = "";
 let player2 = "";
 let currentPlayer = "";
 let currentSymbol = "X";
-let gameActive = true;
+let gameOver = false;
 
-const winningPatterns = [
-  ["1", "2", "3"],
-  ["4", "5", "6"],
-  ["7", "8", "9"],
-  ["1", "4", "7"],
-  ["2", "5", "8"],
-  ["3", "6", "9"],
-  ["1", "5", "9"],
-  ["3", "5", "7"],
+const winPatterns = [
+  ["1","2","3"],
+  ["4","5","6"],
+  ["7","8","9"],
+  ["1","4","7"],
+  ["2","5","8"],
+  ["3","6","9"],
+  ["1","5","9"],
+  ["3","5","7"]
 ];
 
 document.getElementById("submit").addEventListener("click", () => {
@@ -23,25 +22,22 @@ document.getElementById("submit").addEventListener("click", () => {
   if (!player1 || !player2) return;
 
   currentPlayer = player1;
+  document.querySelector(".message").textContent = `${currentPlayer}, you're up`;
 
-  document.getElementById("player-form").style.display = "none";
-  document.getElementById("game").style.display = "block";
-
-  updateMessage();
+  document.getElementById("form").style.display = "none";
+  document.querySelector(".board").style.display = "grid";
 });
 
-const cells = document.querySelectorAll(".cell");
-
-cells.forEach((cell) => {
+document.querySelectorAll(".cell").forEach(cell => {
   cell.addEventListener("click", () => {
-    if (cell.textContent || !gameActive) return;
+    if (cell.textContent || gameOver) return;
 
     cell.textContent = currentSymbol;
 
     if (checkWinner()) {
       document.querySelector(".message").textContent =
-        `${currentPlayer} congratulations you won!`;
-      gameActive = false;
+        `${currentPlayer}, congratulations you won!`;
+      gameOver = true;
       return;
     }
 
@@ -57,18 +53,14 @@ function switchTurn() {
     currentPlayer = player1;
     currentSymbol = "X";
   }
-  updateMessage();
-}
 
-function updateMessage() {
-  document.querySelector(".message").textContent =
-    `${currentPlayer}, you're up`;
+  document.querySelector(".message").textContent = `${currentPlayer}, you're up`;
 }
 
 function checkWinner() {
-  return winningPatterns.some((pattern) => {
-    return pattern.every((id) => {
-      return document.getElementById(id).textContent === currentSymbol;
-    });
-  });
+  return winPatterns.some(pattern =>
+    pattern.every(id =>
+      document.getElementById(id).textContent === currentSymbol
+    )
+  );
 }
